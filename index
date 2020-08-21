@@ -1,0 +1,29 @@
+
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      
+      <title>Repositorio De arquivos</title>
+      <link rel="stylesheet" href="repo.css">
+      <link rel="shortcut icon" href="icon/user_black_folder_icon_rbm_icon.ico">
+  </head>
+   <div class="corpo_menu">
+     <ul class="menu">
+         <li class="li_menu"> <a class="link" href="index.html"> home</a> </li>
+         <li class="li_menu"> <a class="link"href="Repositorio.html""> Repositorio</a> </li>
+         <li class="li_menu"> <a class="link" href="#"> teste</a> </li>
+         <li class="li_menu"> <a class="link"href="curri.html"> Sobre mim</a> </li>
+
+     </ul>
+     
+  </div>
+    <main class="conteudo_home"> 
+
+      
+    </main>
+  <body>
+    
+  </body>
+  </html>  
+    
