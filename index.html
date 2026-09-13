@@ -1,199 +1,374 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>meu portifolio</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-        </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-        </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-        </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://kit.fontawesome.com/f0e17cbf2f.js" crossorigin="anonymous"></script>
-    <style>
-        p {
-            font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
+<title>Roleta de Desafios</title>
 
-        .foto-perfil {
-            height: 200px;
-            max-width: auto;
-            border-radius: 50%;
-        }
-
-        .icones {
-            padding-left: 5px;
-        }
-
-        .titulosBrancos {
-            text-decoration: underline;
-            text-underline-position: under;
-            padding-bottom: 20px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: white;
-        }
-
-        .titulosVerdes {
-            text-decoration: underline;
-            text-underline-position: under;
-            padding-bottom: 20px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #18bc9c
-        }
-
-        .paragrafoBrancos {
-            color: white !important;
-        }
-
-
-        .jumbotron {
-            margin-bottom: 0px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        p {
-            color: black !important;
-        }
-
-        .corPrimaria {
-            background-color: #18bc9c;
-        }
-        .cor2{
-            background-color: #2c3e50;
-        }
-
-        .itemMenu {
-            color: white;
-        }
-    .zap{
-        height: 100px;
+<style>
+    * {
+        box-sizing: border-box;
     }
 
-    </style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #151515;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        text-align: center;
+        width: 95%;
+        max-width: 650px;
+    }
+
+    h1 {
+        color: #ffd700;
+        margin-bottom: 25px;
+    }
+
+    .roleta-container {
+        position: relative;
+        width: 440px;
+        height: 440px;
+        margin: auto;
+    }
+
+    .seta {
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 40px solid #ffd700;
+        z-index: 10;
+    }
+
+    .roleta {
+        width: 440px;
+        height: 440px;
+        border-radius: 50%;
+        border: 10px solid #d4af37;
+
+        background:
+        conic-gradient(
+            #e63946 0deg 10deg,
+            #1d3557 10deg 20deg,
+            #f4a261 20deg 30deg,
+            #2a9d8f 30deg 40deg,
+            #9b5de5 40deg 50deg,
+            #f72585 50deg 60deg,
+            #457b9d 60deg 70deg,
+            #e76f51 70deg 80deg,
+            #06d6a0 80deg 90deg,
+            #8338ec 90deg 100deg,
+            #ff006e 100deg 110deg,
+            #118ab2 110deg 120deg,
+            #fb8500 120deg 130deg,
+            #219ebc 130deg 140deg,
+            #8338ec 140deg 150deg,
+            #ef476f 150deg 160deg,
+            #06d6a0 160deg 170deg,
+            #3a86ff 170deg 180deg,
+            #ffbe0b 180deg 190deg,
+            #8338ec 190deg 200deg,
+            #e63946 200deg 210deg,
+            #2a9d8f 210deg 220deg,
+            #f72585 220deg 230deg,
+            #457b9d 230deg 240deg,
+            #f4a261 240deg 250deg,
+            #9b5de5 250deg 260deg,
+            #06d6a0 260deg 270deg,
+            #ff006e 270deg 280deg,
+            #118ab2 280deg 290deg,
+            #fb8500 290deg 300deg,
+            #3a86ff 300deg 310deg,
+            #ef476f 310deg 320deg,
+            #219ebc 320deg 330deg,
+            #8338ec 330deg 340deg,
+            #ffbe0b 340deg 350deg,
+            #e63946 350deg 360deg
+        );
+
+        transition: transform 5s cubic-bezier(.15,.75,.15,1);
+
+        box-shadow:
+            0 0 30px rgba(255,215,0,.35),
+            inset 0 0 30px #000;
+    }
+
+    .centro {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: #111;
+        border: 8px solid #ffd700;
+        border-radius: 50%;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: 5;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 35px;
+    }
+
+    button {
+        margin-top: 30px;
+        padding: 16px 55px;
+
+        border: none;
+        border-radius: 10px;
+
+        background: #ffd700;
+        color: #111;
+
+        font-size: 20px;
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #fff;
+    }
+
+    button:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    #resultado {
+        margin-top: 25px;
+        padding: 20px;
+
+        min-height: 80px;
+
+        background: #222;
+        border-radius: 12px;
+
+        font-size: 22px;
+        font-weight: bold;
+
+        border: 2px solid #ffd700;
+    }
+
+    .titulo-desafio {
+        color: #ffd700;
+        font-size: 16px;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    @media(max-width: 500px) {
+
+        .roleta-container {
+            width: 330px;
+            height: 330px;
+        }
+
+        .roleta {
+            width: 330px;
+            height: 330px;
+        }
+    }
+</style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light" style="background-color:#2c3e50">
-        <a class="navbar-brand" href="#" style=color:white>Willian Garlippe Fernandes Beata</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
-            aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample04">
-            <ul class="navbar-nav mr-auto">
+<div class="container">
 
-            </ul>
-            <ul class="navbar-nav">
-                
-                <li>
-                    <a href="#sobre-mim" class="nav-link" style=color:white>Sobre mim</a>
-                </li>
-                <li>
-                    <a href="#depoimentos" class="nav-link" style=color:white>experiencia</a>
-                </li>
-                <li>
-                    <a href="#contato" class="nav-link" style=color:white>Contato</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <h1>🎯 ROLETA DE DESAFIOS</h1>
 
-    <section class="jumbotron text-center corPrimaria">
-        <div class="container">
-            <img src="minha foto.png" class="foto-perfil" alt="Responsive image">
-            <h1 class="jumbotron-heading" style="color:white;text-transform: uppercase;">Willian Garlippe</h1>
-            <p class="lead" style="color:white !important;">Software Developer - Blogger
-            </p>
-            <p>
-                <a class="zap" href="https://api.whatsapp.com/send?phone=5516997534224&text=Ol%C3%A1%20posso%20ajudar" target="_blank"><img src="zap.png"></a>
-                
-            </p>
-            
-            <a href="https://www.linkedin.com/in/willian-beata-978bba188/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank"><i style="color:white" class="fab fa-linkedin"></i></a>
-            
-        </div>
-    </section>
-   
+    <div class="roleta-container">
 
-    <section class="jumbotron text-center  cor2" id="sobre-mim">
-        <div class="container">
-            <h2 class="jumbotron-heading titulosBrancos">Sobre mim</h2>
-            <p class="lead paragrafoBrancos">Olá meu nome é Willian estou no mercado da Tecnologia Da Informação a mais de 5 anos,
-                 Sou formado Em Analise E desenvolvimento De Sistemas pela UNIP(Univerciade Paulista).
-                Sou apaixado por tecnologias  e desenvolvimento, e gosto de compartilhar meu conhecimento sempre que possível
-                com meus colegas de trabalho.
-              
-                 
-                       
-            
-            
-            
-            
-            </p>
-        </div>
-    </section>
+        <div class="seta"></div>
 
-    <section Id="depoimentos">
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <h2 class="text-center jumbotron-heading titulosVerdes">experiencia</h2>
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">Atuei na equipe de Service Desk por 4 anos, tenho conhecimentos de infra estrutura e Sistemas
-                        sou focado em meus objetivos tenho conhecimento em liguagens de programaçôes e uma vasta experiencia em suporte 
-                    tecnico    </p>
-                    <footer class="blockquote-footer">Suporte<cite title="Source Title"> Unimed Araraquara</cite>
-                    </footer>
-                </blockquote>
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">Atuava em reparos tecnicos em desktops e notebooks, realizava formataçôes troca de componentes
-                        eletronicos, manutençoes em impressoras  .</p>
-                    <footer class="blockquote-footer">Tecnico <cite title="Source Title">Alpha Informática</cite>
-                    </footer>
-                </blockquote>
+        <div id="roleta" class="roleta">
+
+            <div class="centro">
+                🎯
             </div>
+
         </div>
-    </section>
 
-    <section Id="contato" class="corPrimaria">
-        <div class="corPrimaria">
-            <div class="container-fluid">
-                <h3 style="padding-top:90px;" class="text-center titulosBrancos">Disponível para oportunidades</h3>
-                <h4 style="padding-bottom:90px;margin-bottom: 0px;color:white;" class="text-center"><a
-                        href="mailto:seuemail@hotmail.com">willian.garlippe@gmail.com👈</a></h4>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <footer class="text-center" style="background-color:#2c3e50;padding:0px; margin:0px">
-        <p style="margin:0px;padding-top:15px;padding-bottom:15px;color:white !important">Copyright 2018 - 2020
-            DevAprender®
-        </p>
+    <button id="girar">
+        GIRAR A ROLETA
+    </button>
+
+    <div id="resultado">
+        Clique em GIRAR para começar!
+    </div>
+
+</div>
 
 
+<script>
+
+const roleta = document.getElementById("roleta");
+const botao = document.getElementById("girar");
+const resultado = document.getElementById("resultado");
+
+let rotacao = 0;
+let girando = false;
 
 
-        
-    </footer>
+// ==============================
+// 36 DESAFIOS
+// ==============================
+
+const desafios = [
+
+    "😂 Conte uma piada engraçada.",
+
+    "🎤 Cante um trecho de uma música.",
+
+    "💃 Dance durante 30 segundos.",
+
+    "🎭 Faça uma imitação de alguém do grupo.",
+
+    "🗣️ Fale com uma voz diferente por 1 minuto.",
+
+    "🐔 Imite uma galinha.",
+
+    "🐒 Imite um macaco durante 20 segundos.",
+
+    "😎 Faça uma pose de modelo.",
+
+    "📸 Faça uma foto fazendo uma careta.",
+
+    "🤔 Responda uma pergunta escolhida pelo grupo.",
+
+    "👏 Faça 20 palmas rapidamente.",
+
+    "🎬 Recrie uma cena famosa de um filme.",
+
+    "👀 Fique 30 segundos sem piscar.",
+
+    "🤣 Tente fazer alguém do grupo rir.",
+
+    "🎵 Cante uma música sem usar a letra corretamente.",
+
+    "🕺 Dance como se estivesse em uma discoteca dos anos 80.",
+
+    "🧠 Fale 5 coisas que começam com a letra A.",
+
+    "🔄 Fale uma frase de trás para frente.",
+
+    "🐶 Imite um cachorro.",
+
+    "👑 Finja ser uma pessoa famosa por 30 segundos.",
+
+    "🎙️ Faça um discurso improvisado de 30 segundos.",
+
+    "😱 Faça sua melhor expressão de susto.",
+
+    "🤪 Faça uma careta e mantenha por 20 segundos.",
+
+    "🧩 Resolva um pequeno enigma escolhido pelo grupo.",
+
+    "🥁 Faça uma batida usando apenas as mãos.",
+
+    "📢 Diga seu nome como se estivesse anunciando um estádio.",
+
+    "🎭 Interprete uma cena dramática imaginária.",
+
+    "😂 Conte uma história engraçada que aconteceu com você.",
+
+    "🐱 Imite um gato durante 20 segundos.",
+
+    "🗣️ Fale durante 30 segundos sem usar a palavra 'eu'.",
+
+    "🏃 Faça 10 polichinelos.",
+
+    "🎯 Escolha outra pessoa para fazer um desafio junto com você.",
+
+    "🎼 Cante uma música usando apenas 'la la la'.",
+
+    "🤖 Fale como um robô durante 1 minuto.",
+
+    "🧙 Finja ser um personagem mágico por 30 segundos.",
+
+    "⭐ Faça sua melhor pose de super-herói."
+
+];
 
 
+// ==============================
+// GIRAR ROLETA
+// ==============================
+
+botao.addEventListener("click", () => {
+
+    if (girando) return;
+
+    girando = true;
+    botao.disabled = true;
+
+    resultado.innerHTML = "🎰 A roleta está girando...";
+
+    // Sorteia desafio
+    const indice = Math.floor(Math.random() * desafios.length);
+
+    const desafio = desafios[indice];
+
+    // Cada desafio ocupa 10 graus
+    const tamanho = 360 / 36;
+
+    // Calcula posição
+    const angulo = indice * tamanho + tamanho / 2;
+
+    // Número de voltas
+    const voltas = 5 + Math.floor(Math.random() * 4);
+
+    // Atualiza rotação
+    rotacao += voltas * 360;
+
+    // Faz o desafio escolhido parar na seta
+    rotacao += 360 - angulo;
+
+    roleta.style.transform = `rotate(${rotacao}deg)`;
 
 
-    
+    // Aguarda animação
+    setTimeout(() => {
+
+        resultado.innerHTML = `
+            <span class="titulo-desafio">
+                🎯 DESAFIO SORTEADO
+            </span>
+
+            ${desafio}
+        `;
+
+        girando = false;
+        botao.disabled = false;
+
+    }, 5000);
+
+});
+
+</script>
+
 </body>
-
 </html>
+```
