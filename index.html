@@ -2,372 +2,238 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Roleta de Desafios</title>
+    <title>Painel de Sites</title>
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #151515;
-        color: white;
-        font-family: Arial, sans-serif;
-    }
-
-    .container {
-        text-align: center;
-        width: 95%;
-        max-width: 650px;
-    }
-
-    h1 {
-        color: #ffd700;
-        margin-bottom: 25px;
-    }
-
-    .roleta-container {
-        position: relative;
-        width: 440px;
-        height: 440px;
-        margin: auto;
-    }
-
-    .seta {
-        position: absolute;
-        top: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-top: 40px solid #ffd700;
-        z-index: 10;
-    }
-
-    .roleta {
-        width: 440px;
-        height: 440px;
-        border-radius: 50%;
-        border: 10px solid #d4af37;
-
-        background:
-        conic-gradient(
-            #e63946 0deg 10deg,
-            #1d3557 10deg 20deg,
-            #f4a261 20deg 30deg,
-            #2a9d8f 30deg 40deg,
-            #9b5de5 40deg 50deg,
-            #f72585 50deg 60deg,
-            #457b9d 60deg 70deg,
-            #e76f51 70deg 80deg,
-            #06d6a0 80deg 90deg,
-            #8338ec 90deg 100deg,
-            #ff006e 100deg 110deg,
-            #118ab2 110deg 120deg,
-            #fb8500 120deg 130deg,
-            #219ebc 130deg 140deg,
-            #8338ec 140deg 150deg,
-            #ef476f 150deg 160deg,
-            #06d6a0 160deg 170deg,
-            #3a86ff 170deg 180deg,
-            #ffbe0b 180deg 190deg,
-            #8338ec 190deg 200deg,
-            #e63946 200deg 210deg,
-            #2a9d8f 210deg 220deg,
-            #f72585 220deg 230deg,
-            #457b9d 230deg 240deg,
-            #f4a261 240deg 250deg,
-            #9b5de5 250deg 260deg,
-            #06d6a0 260deg 270deg,
-            #ff006e 270deg 280deg,
-            #118ab2 280deg 290deg,
-            #fb8500 290deg 300deg,
-            #3a86ff 300deg 310deg,
-            #ef476f 310deg 320deg,
-            #219ebc 320deg 330deg,
-            #8338ec 330deg 340deg,
-            #ffbe0b 340deg 350deg,
-            #e63946 350deg 360deg
-        );
-
-        transition: transform 5s cubic-bezier(.15,.75,.15,1);
-
-        box-shadow:
-            0 0 30px rgba(255,215,0,.35),
-            inset 0 0 30px #000;
-    }
-
-    .centro {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        background: #111;
-        border: 8px solid #ffd700;
-        border-radius: 50%;
-
-        top: 50%;
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-
-        z-index: 5;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 35px;
-    }
-
-    button {
-        margin-top: 30px;
-        padding: 16px 55px;
-
-        border: none;
-        border-radius: 10px;
-
-        background: #ffd700;
-        color: #111;
-
-        font-size: 20px;
-        font-weight: bold;
-
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #fff;
-    }
-
-    button:disabled {
-        opacity: .5;
-        cursor: not-allowed;
-    }
-
-    #resultado {
-        margin-top: 25px;
-        padding: 20px;
-
-        min-height: 80px;
-
-        background: #222;
-        border-radius: 12px;
-
-        font-size: 22px;
-        font-weight: bold;
-
-        border: 2px solid #ffd700;
-    }
-
-    .titulo-desafio {
-        color: #ffd700;
-        font-size: 16px;
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    @media(max-width: 500px) {
-
-        .roleta-container {
-            width: 330px;
-            height: 330px;
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
-        .roleta {
-            width: 330px;
-            height: 330px;
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #101014;
+            color: white;
         }
-    }
-</style>
+
+        /* CABEÇALHO */
+
+        header {
+            padding: 25px;
+            text-align: center;
+            background: #18181f;
+            border-bottom: 2px solid #333;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #ffd700;
+            font-size: 32px;
+        }
+
+        header p {
+            color: #aaa;
+            margin-bottom: 0;
+        }
+
+        /* PAINEL */
+
+        .painel {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .categoria {
+            margin-bottom: 35px;
+        }
+
+        .categoria h2 {
+            border-left: 5px solid #ffd700;
+            padding-left: 12px;
+            color: #ffd700;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        /* BOTÕES */
+
+        .botao {
+            min-height: 100px;
+            border: 1px solid #333;
+            border-radius: 15px;
+            background: #1d1d24;
+            color: white;
+            cursor: pointer;
+            transition: .2s;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+        }
+
+        .botao:hover {
+            transform: translateY(-5px);
+            background: #292933;
+            border-color: #ffd700;
+            box-shadow: 0 8px 25px rgba(0,0,0,.4);
+        }
+
+        .icone {
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .nome {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .descricao {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* RODAPÉ */
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+        }
+
+        @media(max-width:600px) {
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            .botoes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .botao {
+                min-height: 90px;
+            }
+
+            .icone {
+                font-size: 28px;
+            }
+
+            .nome {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
 
-    <h1>🎯 ROLETA DE DESAFIOS</h1>
+    <h1>🌐 MEU PAINEL</h1>
 
-    <div class="roleta-container">
+    <p>
+        Central de acesso aos meus sites
+    </p>
 
-        <div class="seta"></div>
+</header>
 
-        <div id="roleta" class="roleta">
 
-            <div class="centro">
-                🎯
-            </div>
+<div class="painel">
+
+
+    
+
+
+   
+
+
+   
+
+
+    <!-- ==========================
+         MEUS PROJETOS
+    =========================== -->
+
+    <section class="categoria">
+
+        <h2>🎮 jogos bdsm</h2>
+
+        <div class="botoes">
+
+            <a class="botao"
+               href="tabuleiro.html">
+
+                <span class="icone">🎲</span>
+
+                <span class="nome">
+                    tabuleiro
+                </span>
+
+                <span class="descricao">
+                    Abrir jogo
+                </span>
+
+            </a>
+
+
+            <a class="botao"
+               href="roleta.html">
+
+                <span class="icone">🎯</span>
+
+                <span class="nome">
+                    Roleta
+                </span>
+
+                <span class="descricao">
+                    Abrir roleta
+                </span>
+
+            </a>
+
+
+            <a class="botao"
+               href="#"
+               target="_blank">
+
+                <span class="icone">🤖</span>
+
+                <span class="nome">
+                    none
+                </span>
+
+                <span class="descricao">
+                    Assistente
+                </span>
+
+            </a>
 
         </div>
 
-    </div>
-
-    <button id="girar">
-        GIRAR A ROLETA
-    </button>
-
-    <div id="resultado">
-        Clique em GIRAR para começar!
-    </div>
+    </section>
 
 </div>
 
 
-<script>
+<footer>
 
-const roleta = document.getElementById("roleta");
-const botao = document.getElementById("girar");
-const resultado = document.getElementById("resultado");
+    Painel de atalhos • HTML + CSS
 
-let rotacao = 0;
-let girando = false;
-
-
-// ==============================
-// 36 DESAFIOS
-// ==============================
-
-const desafios = [
-
-    "😂 Conte uma piada engraçada.",
-
-    "🎤 Cante um trecho de uma música.",
-
-    "💃 Dance durante 30 segundos.",
-
-    "🎭 Faça uma imitação de alguém do grupo.",
-
-    "🗣️ Fale com uma voz diferente por 1 minuto.",
-
-    "🐔 Imite uma galinha.",
-
-    "🐒 Imite um macaco durante 20 segundos.",
-
-    "😎 Faça uma pose de modelo.",
-
-    "📸 Faça uma foto fazendo uma careta.",
-
-    "🤔 Responda uma pergunta escolhida pelo grupo.",
-
-    "👏 Faça 20 palmas rapidamente.",
-
-    "🎬 Recrie uma cena famosa de um filme.",
-
-    "👀 Fique 30 segundos sem piscar.",
-
-    "🤣 Tente fazer alguém do grupo rir.",
-
-    "🎵 Cante uma música sem usar a letra corretamente.",
-
-    "🕺 Dance como se estivesse em uma discoteca dos anos 80.",
-
-    "🧠 Fale 5 coisas que começam com a letra A.",
-
-    "🔄 Fale uma frase de trás para frente.",
-
-    "🐶 Imite um cachorro.",
-
-    "👑 Finja ser uma pessoa famosa por 30 segundos.",
-
-    "🎙️ Faça um discurso improvisado de 30 segundos.",
-
-    "😱 Faça sua melhor expressão de susto.",
-
-    "🤪 Faça uma careta e mantenha por 20 segundos.",
-
-    "🧩 Resolva um pequeno enigma escolhido pelo grupo.",
-
-    "🥁 Faça uma batida usando apenas as mãos.",
-
-    "📢 Diga seu nome como se estivesse anunciando um estádio.",
-
-    "🎭 Interprete uma cena dramática imaginária.",
-
-    "😂 Conte uma história engraçada que aconteceu com você.",
-
-    "🐱 Imite um gato durante 20 segundos.",
-
-    "🗣️ Fale durante 30 segundos sem usar a palavra 'eu'.",
-
-    "🏃 Faça 10 polichinelos.",
-
-    "🎯 Escolha outra pessoa para fazer um desafio junto com você.",
-
-    "🎼 Cante uma música usando apenas 'la la la'.",
-
-    "🤖 Fale como um robô durante 1 minuto.",
-
-    "🧙 Finja ser um personagem mágico por 30 segundos.",
-
-    "⭐ Faça sua melhor pose de super-herói."
-
-];
-
-
-// ==============================
-// GIRAR ROLETA
-// ==============================
-
-botao.addEventListener("click", () => {
-
-    if (girando) return;
-
-    girando = true;
-    botao.disabled = true;
-
-    resultado.innerHTML = "🎰 A roleta está girando...";
-
-    // Sorteia desafio
-    const indice = Math.floor(Math.random() * desafios.length);
-
-    const desafio = desafios[indice];
-
-    // Cada desafio ocupa 10 graus
-    const tamanho = 360 / 36;
-
-    // Calcula posição
-    const angulo = indice * tamanho + tamanho / 2;
-
-    // Número de voltas
-    const voltas = 5 + Math.floor(Math.random() * 4);
-
-    // Atualiza rotação
-    rotacao += voltas * 360;
-
-    // Faz o desafio escolhido parar na seta
-    rotacao += 360 - angulo;
-
-    roleta.style.transform = `rotate(${rotacao}deg)`;
-
-
-    // Aguarda animação
-    setTimeout(() => {
-
-        resultado.innerHTML = `
-            <span class="titulo-desafio">
-                🎯 DESAFIO SORTEADO
-            </span>
-
-            ${desafio}
-        `;
-
-        girando = false;
-        botao.disabled = false;
-
-    }, 5000);
-
-});
-
-</script>
+</footer>
 
 </body>
 </html>
