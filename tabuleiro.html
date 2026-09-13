@@ -1,0 +1,636 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafio no Tabuleiro</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #141414;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #ffd700;
+    margin: 20px 0 5px;
+}
+
+.info {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+/* TABULEIRO */
+
+#tabuleiro {
+    width: 650px;
+    max-width: 95vw;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    padding: 10px;
+    background: #222;
+    border: 4px solid #d4af37;
+    border-radius: 15px;
+}
+
+.casa {
+    position: relative;
+    min-height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+    border: 2px solid rgba(255,255,255,.15);
+}
+
+.normal {
+    background: #333;
+}
+
+.desafio {
+    background: #7b2cbf;
+}
+
+.avance {
+    background: #168aad;
+}
+
+.volte {
+    background: #d62828;
+}
+
+.sorte {
+    background: #f77f00;
+}
+
+.inicio {
+    background: #2a9d8f;
+}
+
+.final {
+    background: #e9c46a;
+    color: #111;
+}
+
+/* JOGADORES */
+
+.jogador {
+    position: absolute;
+    font-size: 28px;
+    bottom: 3px;
+}
+
+.jogador1 {
+    left: 5px;
+}
+
+.jogador2 {
+    right: 5px;
+}
+
+/* CONTROLES */
+
+#painel {
+    margin: 20px auto;
+    width: 95%;
+    max-width: 650px;
+    padding: 20px;
+    background: #222;
+    border-radius: 15px;
+    border: 2px solid #333;
+}
+
+#turno {
+    font-size: 22px;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+#dado {
+    font-size: 60px;
+    margin: 10px;
+}
+
+button {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 10px;
+    background: #ffd700;
+    color: #111;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+#mensagem {
+    margin-top: 15px;
+    min-height: 50px;
+    font-size: 18px;
+}
+
+#desafioAtual {
+    margin-top: 15px;
+    padding: 15px;
+    background: #151515;
+    border-radius: 10px;
+    color: #ddd;
+    display: none;
+}
+
+#desafioTexto {
+    color: #ffd700;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.legenda {
+    margin: 20px auto;
+    max-width: 650px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.legenda span {
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+@media(max-width:600px) {
+
+    #tabuleiro {
+        gap: 3px;
+        padding: 5px;
+    }
+
+    .casa {
+        min-height: 55px;
+        font-size: 9px;
+    }
+
+    .jogador {
+        font-size: 20px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎲 DESAFIO NO TABULEIRO</h1>
+
+<div class="info">
+    Jogue o dado, avance e cumpra os desafios!
+</div>
+
+<div id="tabuleiro"></div>
+
+<div class="legenda">
+    <span class="inicio">INÍCIO</span>
+    <span class="desafio">DESAFIO</span>
+    <span class="avance">AVANCE</span>
+    <span class="volte">VOLTE</span>
+    <span class="sorte">SORTE</span>
+    <span class="final">FINAL</span>
+</div>
+
+<div id="painel">
+
+    <div id="turno">
+        Vez do Jogador 1
+    </div>
+
+    <div id="dado">
+        🎲
+    </div>
+
+    <button id="botao">
+        JOGAR DADO
+    </button>
+
+    <div id="mensagem">
+        Boa sorte!
+    </div>
+
+    <div id="desafioAtual">
+        <div>🔥 SEU DESAFIO:</div>
+        <div id="desafioTexto"></div>
+    </div>
+
+</div>
+
+<script>
+
+/* =========================
+   CONFIGURAÇÃO
+========================= */
+
+const totalCasas = 40;
+
+const jogadores = [
+    {
+        nome: "Jogador 1",
+        posicao: 0,
+        emoji: "🔴"
+    },
+    {
+        nome: "Jogador 2",
+        posicao: 0,
+        emoji: "🔵"
+    }
+];
+
+let jogadorAtual = 0;
+
+
+/* =========================
+   DESAFIOS
+========================= */
+
+const desafios = [
+
+    "Conte uma piada.",
+    "Cante uma música por 20 segundos.",
+    "Faça uma dança engraçada.",
+    "Imite um animal.",
+    "Faça uma careta por 10 segundos.",
+    "Fale com uma voz engraçada.",
+    "Faça 10 agachamentos.",
+    "Imite um personagem famoso.",
+    "Conte uma história engraçada.",
+    "Faça uma pose de estátua.",
+    "Cante uma música sem usar a palavra principal.",
+    "Fale um trava-língua.",
+    "Faça alguém rir.",
+    "Finja que está apresentando um programa de TV.",
+    "Faça uma imitação de robô.",
+    "Dance sem sair do lugar.",
+    "Fale o alfabeto rapidamente.",
+    "Diga 5 animais em 10 segundos.",
+    "Faça uma pose de super-herói.",
+    "Imite um narrador de futebol.",
+    "Finja que ganhou um prêmio.",
+    "Faça uma propaganda de um objeto próximo.",
+    "Fale durante 20 segundos sem usar a letra A.",
+    "Faça uma imitação escolhida pelo outro jogador.",
+    "Finja que está em um filme de terror.",
+    "Faça uma cena dramática.",
+    "Conte uma história usando 3 palavras escolhidas pelo outro jogador.",
+    "Faça uma dança em câmera lenta.",
+    "Imite um apresentador de TV.",
+    "Faça uma pose engraçada para uma foto.",
+    "Fale como um bebê por 20 segundos.",
+    "Finja que está em uma entrevista.",
+    "Faça uma apresentação de 30 segundos.",
+    "Imite alguém do grupo.",
+    "Faça uma comemoração de gol.",
+    "Invente um superpoder e explique."
+];
+
+
+/* =========================
+   CASAS ESPECIAIS
+========================= */
+
+const casasDesafio = [
+    3, 6, 9, 12, 15, 18,
+    21, 24, 27, 30, 33, 36
+];
+
+const casasAvance = [5, 16, 28];
+
+const casasVolte = [8, 20, 31];
+
+const casasSorte = [10, 25, 35];
+
+
+/* =========================
+   CRIAR TABULEIRO
+========================= */
+
+const tabuleiro = document.getElementById("tabuleiro");
+
+function criarTabuleiro() {
+
+    tabuleiro.innerHTML = "";
+
+    for(let i = 0; i < totalCasas; i++) {
+
+        const casa = document.createElement("div");
+
+        casa.classList.add("casa");
+
+        if(i === 0) {
+            casa.classList.add("inicio");
+            casa.innerHTML = "🚩<br>INÍCIO";
+        }
+
+        else if(i === totalCasas - 1) {
+            casa.classList.add("final");
+            casa.innerHTML = "🏆<br>FINAL";
+        }
+
+        else if(casasDesafio.includes(i)) {
+            casa.classList.add("desafio");
+            casa.innerHTML = "🔥<br>DESAFIO";
+        }
+
+        else if(casasAvance.includes(i)) {
+            casa.classList.add("avance");
+            casa.innerHTML = "⬆️<br>AVANCE";
+        }
+
+        else if(casasVolte.includes(i)) {
+            casa.classList.add("volte");
+            casa.innerHTML = "⬇️<br>VOLTE";
+        }
+
+        else if(casasSorte.includes(i)) {
+            casa.classList.add("sorte");
+            casa.innerHTML = "🍀<br>SORTE";
+        }
+
+        else {
+            casa.classList.add("normal");
+            casa.innerHTML = i;
+        }
+
+        casa.id = "casa-" + i;
+
+        tabuleiro.appendChild(casa);
+    }
+
+    atualizarJogadores();
+}
+
+
+/* =========================
+   MOSTRAR JOGADORES
+========================= */
+
+function atualizarJogadores() {
+
+    document.querySelectorAll(".jogador").forEach(
+        elemento => elemento.remove()
+    );
+
+    jogadores.forEach((jogador, indice) => {
+
+        const casa = document.getElementById(
+            "casa-" + jogador.posicao
+        );
+
+        const peça = document.createElement("span");
+
+        peça.classList.add(
+            "jogador",
+            indice === 0 ? "jogador1" : "jogador2"
+        );
+
+        peça.innerHTML = jogador.emoji;
+
+        casa.appendChild(peça);
+    });
+}
+
+
+/* =========================
+   JOGAR DADO
+========================= */
+
+const botao = document.getElementById("botao");
+const dado = document.getElementById("dado");
+const mensagem = document.getElementById("mensagem");
+
+botao.addEventListener("click", jogar);
+
+
+function jogar() {
+
+    botao.disabled = true;
+
+    const jogador = jogadores[jogadorAtual];
+
+    const numero = Math.floor(Math.random() * 6) + 1;
+
+    dado.innerHTML = numero;
+
+    mensagem.innerHTML =
+        jogador.nome + " tirou " + numero + "!";
+
+    jogador.posicao += numero;
+
+    if(jogador.posicao >= totalCasas - 1) {
+
+        jogador.posicao = totalCasas - 1;
+
+        atualizarJogadores();
+
+        setTimeout(() => {
+
+            alert(
+                "🏆 " + jogador.nome +
+                " venceu o jogo!"
+            );
+
+            reiniciar();
+
+        }, 500);
+
+        return;
+    }
+
+    atualizarJogadores();
+
+    setTimeout(() => {
+
+        verificarCasa(jogador);
+
+    }, 400);
+
+}
+
+
+/* =========================
+   VERIFICAR CASA
+========================= */
+
+function verificarCasa(jogador) {
+
+    const posicao = jogador.posicao;
+
+    /* DESAFIO */
+
+    if(casasDesafio.includes(posicao)) {
+
+        const desafio =
+            desafios[
+                Math.floor(
+                    Math.random() * desafios.length
+                )
+            ];
+
+        document.getElementById(
+            "desafioAtual"
+        ).style.display = "block";
+
+        document.getElementById(
+            "desafioTexto"
+        ).innerHTML = desafio;
+
+        mensagem.innerHTML =
+            "🔥 Você caiu em uma casa de desafio!";
+
+    }
+
+    /* AVANCE */
+
+    else if(casasAvance.includes(posicao)) {
+
+        jogador.posicao += 3;
+
+        if(jogador.posicao >= totalCasas) {
+            jogador.posicao = totalCasas - 1;
+        }
+
+        mensagem.innerHTML =
+            "⬆️ Sorte! Avance 3 casas!";
+
+        atualizarJogadores();
+
+    }
+
+    /* VOLTE */
+
+    else if(casasVolte.includes(posicao)) {
+
+        jogador.posicao -= 3;
+
+        if(jogador.posicao < 0) {
+            jogador.posicao = 0;
+        }
+
+        mensagem.innerHTML =
+            "⬇️ Você voltou 3 casas!";
+
+        atualizarJogadores();
+
+    }
+
+    /* SORTE */
+
+    else if(casasSorte.includes(posicao)) {
+
+        const bonus =
+            Math.random() < .5;
+
+        if(bonus) {
+
+            jogador.posicao += 2;
+
+            mensagem.innerHTML =
+                "🍀 Sorte! Avance 2 casas!";
+
+        } else {
+
+            jogador.posicao -= 2;
+
+            if(jogador.posicao < 0) {
+                jogador.posicao = 0;
+            }
+
+            mensagem.innerHTML =
+                "😅 Azar! Volte 2 casas!";
+        }
+
+        atualizarJogadores();
+    }
+
+    else {
+
+        mensagem.innerHTML =
+            "➡️ Casa normal.";
+    }
+
+
+    /* PRÓXIMO JOGADOR */
+
+    jogadorAtual++;
+
+    if(jogadorAtual >= jogadores.length) {
+        jogadorAtual = 0;
+    }
+
+    document.getElementById("turno").innerHTML =
+        "Vez do " +
+        jogadores[jogadorAtual].nome;
+
+    botao.disabled = false;
+}
+
+
+/* =========================
+   REINICIAR
+========================= */
+
+function reiniciar() {
+
+    jogadores[0].posicao = 0;
+    jogadores[1].posicao = 0;
+
+    jogadorAtual = 0;
+
+    dado.innerHTML = "🎲";
+
+    mensagem.innerHTML =
+        "Novo jogo! Boa sorte!";
+
+    document.getElementById(
+        "desafioAtual"
+    ).style.display = "none";
+
+    document.getElementById("turno").innerHTML =
+        "Vez do Jogador 1";
+
+    botao.disabled = false;
+
+    atualizarJogadores();
+}
+
+
+/* INICIAR */
+
+criarTabuleiro();
+
+</script>
+
+</body>
+</html>
+```
