@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot BDSM </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle, #1a0000 0%, #000000 100%);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+
+        /* Efeito Metálico e Estrutura da Máquina */
+        .machine-wrapper {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .machine-body {
+            /* Gradiente Simulando Metal Escuro */
+            background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            border: 8px solid #0d0249;
+            border-image: linear-gradient(to bottom, #f20b0b, #940bf6) 1;
+            border-radius: 25px;
+            padding: 25px;
+            width: 380px;
+            box-shadow: 
+                0 0 0 2px #000,
+                0 0 0 8px #222,
+                0 20px 50px rgba(0,0,0,0.8),
+                inset 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Placa de Ouro no Topo */
+        .gold-plate {
+            background: linear-gradient(to bottom, #12d0dd, #6f5be3, #d2d0c5);
+            color: #2a0000;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            padding: 8px 0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            box-shadow: 
+                inset 0 0 10px rgba(0,0,0,0.8),
+                0 2px 5px rgba(0,0,0,0.5);
+            border: 1px solid #8b6508;
+        }
+
+        .character-display {
+            background: #000;
+            color: #ff004c;
+            text-align: center;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border: 2px solid #444;
+            box-shadow: inset 0 0 10px #000;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff004c;
+        }
+
+        /* Janela dos Slots (Vidro) */
+        .slots-window {
+            background: #000;
+            padding: 10px;
+            border-radius: 10px;
+            border: 4px solid #6470dfcd; /* Prata */
+            background-image: linear-gradient(to bottom, #333, #000, #333);
+            box-shadow: inset 0 0 20px #000;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slot {
+            width: 80px;
+            height: 100px;
+            background: #fff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+            position: relative;
+            border: 1px solid #087aeb;
+        }
+
+        /* Reflexo no vidro */
+        .slots-window::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .slot.spinning span {
+            animation: blur-spin 0.1s infinite linear;
+            display: block;
+        }
+
+        @keyframes blur-spin {
+            0% { transform: translateY(-15px); opacity: 0.4; filter: blur(3px); }
+            50% { transform: translateY(15px); opacity: 0.4; filter: blur(3px); }
+            100% { transform: translateY(-15px); opacity: 0.4; filter: blur(3px); }
+        }
+
+        /* Controles e Alavanca */
+        .controls-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 4px solid #333;
+            padding-top: 20px;
+            background: linear-gradient(to bottom, #111, #222);
+            padding: 15px 10px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .credit-display {
+            background: #000;
+            border: 2px solid #555;
+            padding: 5px 15px;
+            font-family: 'Courier New', monospace;
+            color: #ff0000; /* LED vermelho */
+            font-size: 1rem;
+            width: 120px;
+            text-align: right;
+            box-shadow: inset 0 0 5px #000;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .btn-pull {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 60px;
+            height: 120px;
+            position: relative;
+            outline: none;
+            margin-right: 10px;
+        }
+
+        /* Alavanca Física */
+        .lever-track {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            width: 12px;
+            height: 110px;
+            background: linear-gradient(90deg, #888, #333, #888);
+            border-radius: 5px;
+            box-shadow: 2px 0 5px #000;
+        }
+
+        .lever-knob {
+            position: absolute;
+            bottom: 90px; /* Posição inicial */
+            right: 5px;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ff4d4d, #800000);
+            border-radius: 50%;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.6),
+                inset 0 0 10px rgba(255,255,255,0.2);
+            transition: bottom 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-pull:active .lever-knob {
+            bottom: 0px; /* Desce */
+        }
+
+        /* Resultado */
+        .result-box {
+            margin-top: 15px;
+            height: 70px;
+            background: #111;
+            border: 2px solid #444;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            box-shadow: inset 0 0 10px #000;
+        }
+
+        .result-title {
+            font-weight: 900;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .result-text {
+            font-size: 0.9rem;
+            color: #ccc;
+            font-family: 'Courier New', monospace;
+        }
+
+        .extreme { color: #ff004c; text-shadow: 0 0 10px #ff004c; }
+        .normal { color: #888; }
+        
+        .win-indicator { animation: pulse 0.5s infinite alternate; }
+
+        @keyframes pulse {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        .game-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: min(470px, 92vw);
+            margin-bottom: 14px;
+        }
+
+        .player-card {
+            flex: 1;
+            min-width: 0;
+            background: linear-gradient(145deg, #151515, #050505);
+            border: 2px solid #444;
+            border-radius: 10px;
+            padding: 10px 8px;
+            text-align: center;
+            box-shadow: inset 0 0 12px #000, 0 4px 12px rgba(0,0,0,.45);
+            transition: .25s ease;
+        }
+
+        .player-card.active-player {
+            border-color: #ff004c;
+            box-shadow: 0 0 14px rgba(255,0,76,.35), inset 0 0 12px #000;
+            transform: translateY(-2px);
+        }
+
+        .escravo-card.active-player {
+            border-color: #aaa;
+            box-shadow: 0 0 14px rgba(180,180,180,.25), inset 0 0 12px #000;
+        }
+
+        .player-name {
+            font-family: 'Cinzel', serif;
+            font-size: .82rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .player-credits {
+            font-family: 'Courier New', monospace;
+            font-size: .95rem;
+            color: #ffd700;
+            text-shadow: 0 0 6px rgba(255,215,0,.45);
+        }
+
+        .turn-arrow {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            color: #ff004c;
+            text-shadow: 0 0 8px #ff004c;
+        }
+
+        .game-over {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.82);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .game-over-box {
+            width: min(390px, 90vw);
+            background: linear-gradient(145deg, #252525, #080808);
+            border: 3px solid #ff004c;
+            border-radius: 18px;
+            padding: 28px 22px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255,0,76,.35);
+        }
+
+        .game-over-box h2 {
+            margin: 0 0 10px;
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
+        }
+
+        .game-over-box p {
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .restart-btn {
+            margin-top: 12px;
+            padding: 12px 24px;
+            border: 0;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ff004c, #8f0030);
+            color: white;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255,0,76,.35);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            animation: fall 1s linear forwards;
+            z-index: 100;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(300px) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 520px) {
+            .game-status { width: 94vw; gap: 6px; }
+            .player-card { padding: 8px 4px; }
+            .player-name { font-size: .7rem; }
+            .player-credits { font-size: .78rem; }
+            .machine-body { width: 330px; padding: 18px; }
+            .slot { width: 68px; height: 88px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-status">
+        <div class="player-card dominadora-card active-player" id="dominadoraCard">
+            <div class="player-name">DOMINADORA</div>
+            <div class="player-credits"><span id="dominadoraCredits">150</span> CRÉDITOS</div>
+        </div>
+        <div class="turn-arrow">VS</div>
+        <div class="player-card escravo-card" id="escravoCard">
+            <div class="player-name">ESCRAVO</div>
+            <div class="player-credits"><span id="escravoCredits">150</span> CRÉDITOS</div>
+        </div>
+    </div>
+
+    <div class="machine-wrapper">
+        <div class="machine-body">
+            
+            <div class="gold-plate">
+                rodar <span style="font-size: 0.8em;">BDSM</span>
+            </div>
+
+            <div class="character-display" id="charDisplay">
+                DOMINADORA
+            </div>
+
+            <div class="slots-window">
+                <div class="slot" id="slot1"><span>⛓️</span></div>
+                <div class="slot" id="slot2"><span>🎭</span></div>
+                <div class="slot" id="slot3"><span>🔥</span></div>
+            </div>
+
+            <div class="result-box">
+                <div id="resultTitle" class="result-title">AGUARDANDO</div>
+                <br>
+                <div id="resultText" class="result-text">...</div>
+            </div>
+
+            <div class="controls-area">
+                <div class="credit-display">CRÉDITOS: <span id="credits">150</span></div>
+                
+                <button class="btn-pull" id="spinBtn" onclick="pullLever()">
+                    <div class="lever-track"></div>
+                    <div class="lever-knob"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ÁUDIO (Web Audio API - Sem arquivos externos) ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSound(type) {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(40, now + 0.1);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } 
+            else if (type === 'spin') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.linearRampToValueAtTime(150, now + 0.5);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.5);
+                osc.start(now);
+                osc.stop(now + 0.5);
+            }
+            else if (type === 'win') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.1);
+                osc.frequency.setValueAtTime(783.99, now + 0.2);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            }
+            else if (type === 'stop') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(200, now);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+        }
+
+        // --- DADOS DO JOGO ---
+        const symbols = [
+            { icon: "⛓️", name: "Algemas" },
+            { icon: "🎭", name: "Mordaça" },
+            { icon: "🔌", name: "Plug" },
+            { icon: "🌹", name: "Fitas" },
+            { icon: "👢", name: "Botas" },
+            { icon: "👑", name: "Coroa" },
+            { icon: "🔥", name: "Vela" },
+            { icon: "🧣", name: "Gargalheira" },
+            { icon: "🍷", name: "Açoite" },
+            { icon: "👁️", name: "Venda" }
+        ];
+
+        const extremeChallenges = [
+    // --- Ajustes e Clássicos Pesados ---
+    "ENGASGO PROFUNDO até as lágrimas.",
+    
+   
+    
+    "SALIVA: Cobrir o rosto dela com a saliva.",
+    
+    "DUBPLE (Double Penetration): Simulado ou real, fundo profundo.",
+    "EXPANSÃO: Dedos grossos ou vibrador grande por 15 min sem tirar.",
+    
+    
+
+    // --- NOVos: Cuspir e Fluidos ---
+    "CUSPE NO FUNDO: Cuspir na boca dela ou no meio do corpo.",
+    
+    
+    
+    "ALMAÇA DO CHÃO: Lamber e chupar o arco plantar (o fundo do pé) por 5 minutos sem parar.",
+    "APRACIONAMENTO DE UNHA: Morder e chupar cada unha dos pés com pressão suficiente para deixar marca vermelha.",
+    "SUDOÇÃO FORÇADA: Colocar os dedos dos pés na sua garganta e engasgar levemente, segurando-os lá até doer.",
+    "MASCARA DE PÉ: Usar os pés como máscara, apertando seu rosto entre as plantas dos pés enquanto eles respiram ofegantes.",
+    "SALIVA DE PÉ: Cobrir seus lábios e bochechas com a saliva ou suor dos pés antes de beijá-los.",
+    "FUNDO DO POÇO: Penetração profunda onde a cabeça dela bate no seu queixo, forçando o pescoço para trás.",
+    "BOLA DE TENIS: Colocar uma bola de tênis (ou objeto redondo) na boca e engasgar ao tentar falar ou respirar pela boca.",
+    "LÍNGUA PRESA: Segurar a língua dela com os dedos enquanto penetra, impedindo que ela respire pelo nariz se a boca estiver fechada.",
+    "SUÇÃO DE AR: Sucção forte no pescoço enquanto ela tenta respirar, criando efeito de ventosa que corta a oxigenação.",
+    "100 PALMADAS ou chicotada: 50 nas nádegas, 50 nos pés (solas), sem pausas. " ,
+    "PÉS NO FOGO: Palmadas rápidas e secas nas plantas dos pés com a mão aberta ou com um objeto (ruler/cinta).",
+    
+    "FUNDÃO: Penetrar até o fundo e segurar a respiração.",
+    
+    
+    
+    "ANDADA PÚBLICA: Vá para a rua de calcinha/sótão, amordaçado (ou com a boca tapada por um objeto), descalço e de mãos para trás por pelo menos 15 minutos.",
+    "OBRIGADO: Durante a humilhação verbal, você deve responder 'Obrigado, Mestre' a cada ofensa, mesmo as mais cruéis.",
+    "VIDA REAL: Tire fotos ou vídeos de você mesmo em posições humilhantes.",
+    "LIXO: Se alguém (ou o parceiro) jogar uma casca de fruta ou papel perto de você, você deve pegar com a boca e comer ou cheirar.",
+    "NOME DE ANIMAL: Por toda a noite, seu nome é apenas 'Cachorro', 'Vaca' ou 'Bicho'. Se usar seu nome real, leva uma palmada.",
+    "SILENCIO FORÇADO: Não pode falar uma palavra, apenas gemer ou grunhir. Se falar, toma um tapa na boca.",
+    "CORPO DE EXPOSIÇÃO: Fique de pé nu contra a parede, imóvel, enquanto outra pessoa passa e te ignora ou te aponta como se fosse móvel."
+
+    
+    
+];
+
+        const bdsmChallenges = [
+            "Chicotadas nas coxas.",
+            "comer porra.",
+            "DESBALANCEADO: Ande descalço em superfícies diferentes (asfalto, calçada, grama) por toda noite.",
+            "MÃO NA COSTA: Mantenha as duas mãos nas costas o tempo todo, como se estivesse preso (mesmo sem amarras visíveis)",
+
+            "MORDAÇA SOFISTICADA: Use uma mordaça na boca, coberta por uma máscara facial bonita ou um lenço durante toda noite ate a dominadora mandar .",
+    
+            "Saliva: Engula ou cuspa.",
+            "POSICÃO DO REU: De mãos amarradas atrás das costas, inclinada para frente, recebendo socos leves ou palmadas fortes nas nádegas.",
+          "PEDIDO PERMISSÃO: Toda ação (beber água, se virar, respirar fundo) precisa de um 'sim' ou 'não' verbal do dominante.",
+         "MORDIDÃO DE SINAL: marca no corpo que indica 'obediência total.",
+          "SALADA DE NOME: Durante a noite toda, cada vez que você falar, a domidanora chinga de nomes novos e absurdos.",
+          "FOTO DA VERGONHA: Tire uma foto sua na posição mais humilhante possível",
+            "CHUTE NO ROSTO: Receber meus pés na cara enquanto eu deito e você fica de joelhos segurando.",
+           "DRENAGEM DE SUOR: Beber o suor acumulado entre os meus dedos dos pés.",
+          "MORDIDA NOS DEDOS: Morder levemente cada dedo do meu pé até deixarem marcas vermelhas.",
+          "MÁSCARA DE PÉ: Usar meus pés como máscara, esfregando o nariz e a boca no arco plantar e calcanhar.",
+
+           "MORDAÇA PERMANENTE: Você usa mordaça (ou garrafa/globo) por toda a noite, só pode falar se eu liberar."
+    
+            
+        ];
+
+        // --- LÓGICA DA MÁQUINA ---
+        const INITIAL_CREDITS = 150;
+        const TRIPLE_REWARD = 15;
+        const DIFFERENT_PENALTY = 30;
+        const MAX_CREDITS = 300;
+
+        let currentCharacter = "DOMINADORA";
+        let isSpinning = false;
+        let gameOver = false;
+
+        const playerCredits = {
+            DOMINADORA: INITIAL_CREDITS,
+            ESCRAVO: INITIAL_CREDITS
+        };
+
+        function pullLever() {
+            if (isSpinning || gameOver) return;
+
+            playSound('click');
+            isSpinning = true;
+
+            const btn = document.getElementById('spinBtn');
+            const slots = [
+                document.getElementById('slot1'),
+                document.getElementById('slot2'),
+                document.getElementById('slot3')
+            ];
+
+            btn.classList.add('active');
+            setTimeout(() => btn.classList.remove('active'), 200);
+
+            slots.forEach(slot => slot.classList.add('spinning'));
+            playSound('spin');
+
+            document.getElementById('resultTitle').innerText = "GIRANDO...";
+            document.getElementById('resultTitle').className = "result-title";
+            document.getElementById('resultText').innerText =
+                `${currentCharacter}: aguardando resultado...`;
+
+            let results = [];
+
+            // Mantém a chance de jackpot em 30%.
+            const isWin = Math.random() < 0.3;
+
+            if (isWin) {
+                const winSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                results = [winSymbol, winSymbol, winSymbol];
+            } else {
+                for (let i = 0; i < 3; i++) {
+                    results.push(symbols[Math.floor(Math.random() * symbols.length)]);
+                }
+            }
+
+            let finished = 0;
+            slots.forEach((slot, index) => {
+                setTimeout(() => {
+                    slot.classList.remove('spinning');
+                    slot.innerHTML = `<span>${results[index].icon}</span>`;
+                    playSound('stop');
+                    finished++;
+
+                    if (finished === 3) {
+                        finishSpin(results);
+                    }
+                }, 1000 + (index * 500));
+            });
+        }
+
+        function finishSpin(results) {
+            const [s1, s2, s3] = results;
+            const isTriple = (s1.name === s2.name && s2.name === s3.name);
+
+            let title = "";
+            let text = "";
+            let cssClass = "";
+            let creditChange = 0;
+
+            if (isTriple) {
+                title = "JACKPOT! +15 CRÉDITOS";
+                cssClass = "extreme";
+                text = extremeChallenges[Math.floor(Math.random() * extremeChallenges.length)];
+                creditChange = TRIPLE_REWARD;
+                playSound('win');
+                createConfetti();
+            } else {
+                title = "SLOTS DIFERENTES —30 CRÉDITOS";
+                cssClass = "normal";
+                text = bdsmChallenges[Math.floor(Math.random() * bdsmChallenges.length)];
+                creditChange = -DIFFERENT_PENALTY;
+                playSound('stop');
+            }
+
+            playerCredits[currentCharacter] += creditChange;
+
+            // Não permite ficar abaixo de zero.
+            if (playerCredits[currentCharacter] < 0) {
+                playerCredits[currentCharacter] = 0;
+            }
+
+            updateCredits();
+
+            document.getElementById('resultTitle').className =
+                `result-title ${cssClass}`;
+            document.getElementById('resultTitle').innerText = title;
+
+            const sinal = creditChange > 0 ? "+" : "";
+            document.getElementById('resultText').innerText =
+                `${text} | ${currentCharacter}: ${sinal}${creditChange} créditos`;
+
+            // Verifica vitória/derrota antes de alternar o turno.
+            if (playerCredits[currentCharacter] >= MAX_CREDITS) {
+                endGame(currentCharacter, "300 créditos");
+                return;
+            }
+
+            if (playerCredits[currentCharacter] <= 0) {
+                const winner = currentCharacter === "DOMINADORA" ? "ESCRAVO" : "DOMINADORA";
+                endGame(currentCharacter, "0 créditos", winner);
+                return;
+            }
+
+            // Alterna automaticamente a vez.
+            toggleCharacter();
+
+            setTimeout(() => {
+                isSpinning = false;
+            }, 700);
+        }
+
+        function updateCredits() {
+            const activeCredits = playerCredits[currentCharacter];
+            document.getElementById('credits').innerText = activeCredits;
+            document.getElementById('dominadoraCredits').innerText = playerCredits.DOMINADORA;
+            document.getElementById('escravoCredits').innerText = playerCredits.ESCRAVO;
+        }
+
+        function toggleCharacter() {
+            currentCharacter =
+                currentCharacter === "DOMINADORA" ? "ESCRAVO" : "DOMINADORA";
+
+            const charDisplay = document.getElementById('charDisplay');
+            const domCard = document.getElementById('dominadoraCard');
+            const escCard = document.getElementById('escravoCard');
+
+            domCard.classList.toggle('active-player', currentCharacter === "DOMINADORA");
+            escCard.classList.toggle('active-player', currentCharacter === "ESCRAVO");
+
+            if (currentCharacter === "DOMINADORA") {
+                charDisplay.innerText = "DOMINADORA";
+                charDisplay.style.color = "#ff004c";
+                charDisplay.style.borderColor = "#ffd700";
+            } else {
+                charDisplay.innerText = "ESCRAVO";
+                charDisplay.style.color = "#aaa";
+                charDisplay.style.borderColor = "#555";
+            }
+
+            updateCredits();
+        }
+
+        function endGame(loser, reason, winner = null) {
+            gameOver = true;
+            isSpinning = false;
+
+            const title = winner
+                ? `${winner} VENCEU!`
+                : `${loser} VENCEU!`;
+
+            const consequence = winner
+                ? `${loser} chegou a ${reason}.`
+                : `${loser} atingiu ${reason}.`;
+
+            document.getElementById('resultTitle').className = "result-title extreme";
+            document.getElementById('resultTitle').innerText = title;
+            document.getElementById('resultText').innerText = consequence;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'game-over';
+            overlay.id = 'gameOver';
+
+            overlay.innerHTML = `
+                <div class="game-over-box">
+                    <h2>${title}</h2>
+                    <p>${consequence}</p>
+                    <p>Placar final: <strong>DOMINADORA ${playerCredits.DOMINADORA}</strong>
+                    × <strong>ESCRAVO ${playerCredits.ESCRAVO}</strong></p>
+                    <p>Consequência: o jogador que perdeu deve cumprir a consequência definida pelo casal.</p>
+                    <button class="restart-btn" onclick="restartGame()">NOVO JOGO</button>
+                </div>
+            `;
+
+            document.body.appendChild(overlay);
+        }
+
+        function restartGame() {
+            playerCredits.DOMINADORA = INITIAL_CREDITS;
+            playerCredits.ESCRAVO = INITIAL_CREDITS;
+            currentCharacter = "DOMINADORA";
+            gameOver = false;
+            isSpinning = false;
+
+            const overlay = document.getElementById('gameOver');
+            if (overlay) overlay.remove();
+
+            updateCredits();
+            toggleCharacter();
+
+            document.getElementById('resultTitle').className = "result-title";
+            document.getElementById('resultTitle').innerText = "AGUARDANDO";
+            document.getElementById('resultText').innerText = "...";
+        }
+
+        updateCredits();
+        toggleCharacter();
+        // Volta para a dominadora como primeira jogadora após a inicialização.
+        toggleCharacter();
+
+        function createConfetti() {
+            for(let i=0; i<30; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = Math.random() * 80 + 10 + '%';
+                conf.style.top = '0';
+                conf.style.backgroundColor = ['#ff004c', '#ffd700', '#fff'][Math.floor(Math.random()*3)];
+                document.querySelector('.machine-body').appendChild(conf);
+                setTimeout(() => conf.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
